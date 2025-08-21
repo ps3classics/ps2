@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PS2 Compatibility</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,7 +16,6 @@
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
     }
-
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -33,9 +32,7 @@
       color: white;
       font-weight: bold;
     }
-    nav a:hover {
-      text-decoration: underline;
-    }
+    nav a:hover { text-decoration: underline; }
 
     .content {
       padding: 20px;
@@ -49,6 +46,26 @@
       max-width: 800px;
     }
 
+    .progress-container {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      width: 80%;
+      height: 30px;
+      margin: 20px auto;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #00cc66, #00994d);
+      text-align: right;
+      padding-right: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 30px;
+      border-radius: 20px 0 0 20px;
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -58,10 +75,7 @@
       margin-left: auto;
       margin-right: auto;
     }
-
-    ul li {
-      margin: 8px 0;
-    }
+    ul li { margin: 8px 0; }
   </style>
 </head>
 <body>
@@ -76,7 +90,16 @@
   <div class="content">
     <h1>PS2 Compatibility Details</h1>
     <p id="last-updated">Loading...</p>
-    <canvas id="barChart"></canvas>
+
+    <!-- progress bar -->
+    <h2>Overall Compatibility</h2>
+    <div class="progress-container">
+      <div id="progress-bar" class="progress-bar">0%</div>
+    </div>
+
+    <!-- stacked bar chart -->
+    <h2>Category Distribution</h2>
+    <canvas id="stackedChart"></canvas>
 
     <h2>Breakdown</h2>
     <ul id="breakdown"></ul>
@@ -92,35 +115,60 @@
 
       const total = Object.values(stats).reduce((a, b) => a + b, 0);
 
-      // Chart.js horizontal bar
-      const ctx = document.getElementById("barChart").getContext("2d");
+      // combine PS2 Classic + Playable for totals
+      const compatible = (stats["PS2 Classic"] || 0) + (stats["Playable"] || 0);
+
+      // progress bar 
+      const percentCompatible = ((compatible / total) * 100).toFixed(1);
+      const bar = document.getElementById("progress-bar");
+      bar.style.width = percentCompatible + "%";
+      bar.textContent = percentCompatible + "%";
+
+      // stacked bar chart
+      const ctx = document.getElementById("stackedChart").getContext("2d");
       new Chart(ctx, {
         type: "bar",
         data: {
-          labels: Object.keys(stats),
-          datasets: [{
-            data: Object.values(stats),
-            backgroundColor: [
-              "rgb(0, 136, 238)",      // PS2 Classic - blue
-              "rgb(153, 221, 153)",    // Playable - green
-              "rgb(238, 238, 136)",    // Minor Issues - yellow
-              "rgb(238, 153, 51)",     // Major Issues - orange
-              "rgb(238, 68, 68)",      // Unplayable - red
-              "rgb(187, 187, 187)"     // Untested - gray
-            ]
-          }]
+          labels: ["Games"],
+          datasets: [
+            {
+              label: "Compatible",
+              data: [compatible],
+              backgroundColor: "rgb(0, 200, 120)"
+            },
+            {
+              label: "Minor Issues",
+              data: [stats["Minor Issues"] || 0],
+              backgroundColor: "rgb(238, 238, 136)"
+            },
+            {
+              label: "Major Issues",
+              data: [stats["Major Issues"] || 0],
+              backgroundColor: "rgb(238, 153, 51)"
+            },
+            {
+              label: "Unplayable",
+              data: [stats["Unplayable"] || 0],
+              backgroundColor: "rgb(238, 68, 68)"
+            },
+            {
+              label: "Untested",
+              data: [stats["Untested"] || 0],
+              backgroundColor: "rgb(187, 187, 187)"
+            }
+          ]
         },
         options: {
-          indexAxis: 'y',
-          plugins: {
-            legend: { display: false },
-          },
+          plugins: { legend: { labels: { color: "white" } } },
+          responsive: true,
           scales: {
             x: {
+              stacked: true,
               ticks: { color: "white" },
               grid: { color: "rgba(255,255,255,0.2)" }
             },
             y: {
+              stacked: true,
               ticks: { color: "white" },
               grid: { color: "rgba(255,255,255,0.2)" }
             }
@@ -128,10 +176,18 @@
         }
       });
 
-      // Breakdown as text
       const breakdownList = document.getElementById("breakdown");
       breakdownList.innerHTML = "";
+
+      // merged compatible
+      const compatibleLi = document.createElement("li");
+      compatibleLi.textContent =
+        `Compatible (PS2 Classic + Playable): ${percentCompatible}% (${compatible} games)`;
+      breakdownList.appendChild(compatibleLi);
+
+      // show others separately
       for (const [key, value] of Object.entries(stats)) {
+        if (key === "PS2 Classic" || key === "Playable") continue;
         const percent = ((value / total) * 100).toFixed(1);
         const li = document.createElement("li");
         li.textContent = `${key}: ${percent}% (${value} games)`;
