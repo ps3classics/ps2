@@ -120,11 +120,29 @@
       // progress bar
       const bar = document.getElementById("progress-bar");
       bar.innerHTML = "";
-      for (const [key, value] of Object.entries(stats)) {
+
+      // merge PS2 Classic + Playable
+      const mergedStats = {
+        "Fully Compatible": stats["PS2 Classic"] + stats["Playable"],
+        "Minor Issues": stats["Minor Issues"],
+        "Major Issues": stats["Major Issues"],
+        "Unplayable": stats["Unplayable"],
+        "Untested": stats["Untested"]
+      };
+
+      const mergedColors = {
+        "Fully Compatible": "rgb(0, 136, 238)", // blue (combine Classic + Playable)
+        "Minor Issues": "rgb(238, 238, 136)",
+        "Major Issues": "rgb(238, 153, 51)",
+        "Unplayable": "rgb(238, 68, 68)",
+        "Untested": "rgb(187, 187, 187)"
+      };
+
+      for (const [key, value] of Object.entries(mergedStats)) {
         const percent = (value / total) * 100;
         const segment = document.createElement("div");
         segment.className = "progress-segment";
-        segment.style.backgroundColor = colors[key];
+        segment.style.backgroundColor = mergedColors[key];
         segment.style.width = percent + "%";
         bar.appendChild(segment);
       }
