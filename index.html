@@ -1,56 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PS2 Classics Compatibility</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PS2 Classics on PS3</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
+    /* background */
     body {
-      font-family: sans-serif;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: linear-gradient(180deg, #003087, #1a4ca3, #0055cc);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-      background: #111;
-      color: #eee;
     }
+
+    nav {
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      flex: 1;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
+
+    #last-updated {
+      margin-top: 1rem;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
     canvas {
-      max-width: 600px;
-      max-height: 600px;
+      max-width: 500px;
+      margin: 2rem auto;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.6);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
-  <h1>PS2 Classics Emulator Compatibility (PS3)</h1>
-  <p id="last-updated"></p>
-  <canvas id="compatChart"></canvas>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="faq.html">FAQ</a>
+    <a href="compatibility.html">Compatibility</a>
+    <a href="https://ps3classics.github.io/ps1">PS1</a>
+    <a href="https://ps3classics.github.io/psp">PSP</a>
+  </nav>
+
+  <div class="container">
+    <h1>PS2 Compatibility on PS3</h1>
+    <canvas id="compatChart"></canvas>
+    <div id="last-updated"></div>
+  </div>
+
+  <footer>
+    Part of the PS3 Classics Project · <a href="https://github.com/ps3classics" style="color:#fff">GitHub</a>
+  </footer>
 
   <script>
     async function loadData() {
-      const response = await fetch("data.json");
-      const { stats, last_updated } = await response.json();
+      try {
+        const response = await fetch("data.json");
+        const { stats, last_updated } = await response.json();
 
-      document.getElementById("last-updated").textContent =
-        "Last updated: " + last_updated;
+        document.getElementById("last-updated").textContent =
+          "Last updated: " + last_updated;
 
-      const ctx = document.getElementById("compatChart").getContext("2d");
-      new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: Object.keys(stats),
-          datasets: [{
-            data: Object.values(stats),
-            backgroundColor: [
-              "rgb(0, 136, 238)",      // PS2 Classic - blue
-              "rgb(153, 221, 153)",    // Playable - green
-              "rgb(238, 238, 136)",    // Minor Issues - yellow
-              "rgb(238, 153, 51)",     // Major Issues - orange
-              "rgb(238, 68, 68)",      // Unplayable - red
-              "rgb(187, 187, 187)"     // Untested - gray
-            ]
-          }]
-        }
-      });
+        const ctx = document.getElementById("compatChart").getContext("2d");
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: Object.keys(stats),
+            datasets: [{
+              data: Object.values(stats),
+              backgroundColor: [
+                "rgb(0, 136, 238)",      // PS2 Classic - blue
+                "rgb(153, 221, 153)",    // Playable - green
+                "rgb(238, 238, 136)",    // Minor Issues - yellow
+                "rgb(238, 153, 51)",     // Major Issues - orange
+                "rgb(238, 68, 68)",      // Unplayable - red
+                "rgb(187, 187, 187)"     // Untested - gray
+              ]
+            }]
+          }
+        });
+      } catch (err) {
+        document.getElementById("last-updated").textContent =
+          "Data could not be loaded.";
+        console.error(err);
+      }
     }
 
     loadData();
