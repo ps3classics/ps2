@@ -86,8 +86,13 @@
     <h1>PS2 Compatibility Details</h1>
     <p id="last-updated">Loading...</p>
 
-    <h2>Overall Compatibility Progress</h2>
+    <h2>Overall Compatibility</h2>
     <div id="progress-bar" class="progress-bar"></div>
+    <ul id="percentages"></ul>
+
+    <h2>Tested Compatibility</h2>
+    <div id="progress-bar-tested" class="progress-bar"></div>
+    <ul id="percentages-tested"></ul>
 
     <h2>Stacked Breakdown</h2>
     <canvas id="stackedChart"></canvas>
@@ -117,13 +122,9 @@
         "Untested": "rgb(187, 187, 187)"
       };
 
-      // progress bar
-      const bar = document.getElementById("progress-bar");
-      bar.innerHTML = "";
-
-      // merge PS2 Classic + Playable
+      // -------- progress bar (all games) --------
       const mergedStats = {
-        "Fully Compatible": stats["PS2 Classic"] + stats["Playable"],
+        "Perfect": stats["PS2 Classic"] + stats["Playable"],
         "Minor Issues": stats["Minor Issues"],
         "Major Issues": stats["Major Issues"],
         "Unplayable": stats["Unplayable"],
@@ -131,20 +132,59 @@
       };
 
       const mergedColors = {
-        "Fully Compatible": "rgb(153, 221, 153)", // green (Classic + Playable)
+        "Perfect": "rgb(153, 221, 153)", // green
         "Minor Issues": "rgb(238, 238, 136)",
         "Major Issues": "rgb(238, 153, 51)",
         "Unplayable": "rgb(238, 68, 68)",
         "Untested": "rgb(187, 187, 187)"
       };
 
+      function renderProgressBar(containerId, stats, total) {
+        const bar = document.getElementById(containerId);
+        bar.innerHTML = "";
+        for (const [key, value] of Object.entries(stats)) {
+          const percent = (value / total) * 100;
+          const segment = document.createElement("div");
+          segment.className = "progress-segment";
+          segment.style.backgroundColor = mergedColors[key];
+          segment.style.width = percent + "%";
+          bar.appendChild(segment);
+        }
+      }
+
+      // progress bar including untested
+      renderProgressBar("progress-bar", mergedStats, total);
+
+      // bullet list including untested
+      const list = document.getElementById("percentages");
+      list.innerHTML = "";
       for (const [key, value] of Object.entries(mergedStats)) {
-        const percent = (value / total) * 100;
-        const segment = document.createElement("div");
-        segment.className = "progress-segment";
-        segment.style.backgroundColor = mergedColors[key];
-        segment.style.width = percent + "%";
-        bar.appendChild(segment);
+        const percent = ((value / total) * 100).toFixed(1);
+        const li = document.createElement("li");
+        li.textContent = `${key}: ${percent}%`;
+        list.appendChild(li);
+      }
+
+      // tested only
+      const testedTotal = total - mergedStats["Untested"];
+      const testedStats = {
+        "Perfect": mergedStats["Perfect"],
+        "Minor Issues": mergedStats["Minor Issues"],
+        "Major Issues": mergedStats["Major Issues"],
+        "Unplayable": mergedStats["Unplayable"]
+      };
+
+      // second bar for tested-only
+      renderProgressBar("progress-bar-tested", testedStats, testedTotal);
+
+      // Add tested-only text summary
+      const testedList = document.getElementById("percentages-tested");
+      testedList.innerHTML = "";
+      for (const [key, value] of Object.entries(testedStats)) {
+        const percent = ((value / testedTotal) * 100).toFixed(1);
+        const li = document.createElement("li");
+        li.textContent = `${key}: ${percent}% (of tested games)`;
+        testedList.appendChild(li);
       }
 
       // stacked bar chart
@@ -183,8 +223,10 @@
       // totals
       const fullyCompatible = stats["PS2 Classic"] + stats["Playable"];
       const fullyPercent = ((fullyCompatible / total) * 100).toFixed(1);
+      const testedPercent = ((fullyCompatible / (total - stats["Untested"])) * 100).toFixed(1);
       document.getElementById("totals").innerHTML =
-        `<strong>Fully Compatible (PS2 Classic + Playable):</strong> ${fullyPercent}% (${fullyCompatible} games out of ${total})`;
+        `<strong>Fully Compatible (PS2 Classic + Playable):</strong> ${fullyPercent}% (${fullyCompatible} games out of ${total})<br>
+         <strong>Tested Compatibility:</strong> ${testedPercent}% of tested games are fully compatible`;
     }
     loadData();
   </script>
