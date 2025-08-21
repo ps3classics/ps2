@@ -6,17 +6,26 @@
   <title>PS2 Classics on PS3</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* background */
+    /* Animated Gradient Background */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       color: #fff;
-      background: linear-gradient(180deg, #003087, #1a4ca3, #0055cc);
+      background: linear-gradient(270deg, #003087, #1a4ca3, #0055cc);
+      background-size: 600% 600%;
+      animation: gradientShift 20s ease infinite;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
     nav {
       background-color: rgba(0, 0, 0, 0.6);
       display: flex;
@@ -35,6 +44,7 @@
       text-decoration: underline;
     }
 
+    /* Main container */
     .container {
       flex: 1;
       text-align: center;
@@ -42,9 +52,17 @@
     }
 
     h1 {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       font-size: 2rem;
       text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
+
+    p.lead {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      text-shadow: 0 0 4px rgba(0,0,0,0.5);
     }
 
     #last-updated {
@@ -77,6 +95,11 @@
 
   <div class="container">
     <h1>PS2 Compatibility on PS3</h1>
+    <p class="lead">
+      This project tracks the compatibility of PS2 titles when run on PS3 via software emulation.<br>  
+      Data is collected and updated daily with community contributions.<br>
+      For more info, see "FAQ". For compatibility details and charts, see "Compatibility".
+    </p>
     <canvas id="compatChart"></canvas>
     <div id="last-updated"></div>
   </div>
@@ -95,6 +118,8 @@
           "Last updated: " + last_updated;
 
         const ctx = document.getElementById("compatChart").getContext("2d");
+
+        // Chart with legend white + drop shadow plugin
         new Chart(ctx, {
           type: "pie",
           data: {
@@ -110,7 +135,28 @@
                 "rgb(187, 187, 187)"     // Untested - gray
               ]
             }]
-          }
+          },
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  color: "white"
+                }
+              }
+            }
+          },
+          plugins: [{
+            id: 'shadow',
+            beforeDraw: (chart) => {
+              const ctx = chart.ctx;
+              ctx.save();
+              ctx.shadowColor = "rgba(0,0,0,0.6)";
+              ctx.shadowBlur = 20;
+              ctx.shadowOffsetX = 4;
+              ctx.shadowOffsetY = 4;
+              ctx.restore();
+            }
+          }]
         });
       } catch (err) {
         document.getElementById("last-updated").textContent =
