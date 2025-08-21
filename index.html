@@ -108,64 +108,73 @@
     Part of the PS3 Classics Project · <a href="https://github.com/ps3classics" style="color:#fff">GitHub</a>
   </footer>
 
-  <script>
-    async function loadData() {
-      try {
-        const response = await fetch("data.json");
-        const { stats, last_updated } = await response.json();
+<script>
+  async function loadData() {
+    try {
+      const response = await fetch("data.json");
+      const { stats, last_updated } = await response.json();
 
-        document.getElementById("last-updated").textContent =
-          "Last updated: " + last_updated;
+      document.getElementById("last-updated").textContent =
+        "Last updated: " + last_updated;
 
-        const ctx = document.getElementById("compatChart").getContext("2d");
+      // Merge PS2 Classic + Playable into "Perfect" for homepage
+      const mergedStats = {
+        "Perfect": (stats["PS2 Classic"] || 0) + (stats["Playable"] || 0),
+        "Playable": stats["Minor Issues"] || 0,
+        "Major Issues": stats["Major Issues"] || 0,
+        "Unplayable": stats["Unplayable"] || 0,
+        "Untested": stats["Untested"] || 0
+      };
 
-        // Chart with legend white + drop shadow plugin
-        new Chart(ctx, {
-          type: "pie",
-          data: {
-            labels: Object.keys(stats),
-            datasets: [{
-              data: Object.values(stats),
-              backgroundColor: [
-                "rgb(0, 136, 238)",      // PS2 Classic - blue
-                "rgb(153, 221, 153)",    // Playable - green
-                "rgb(238, 238, 136)",    // Minor Issues - yellow
-                "rgb(238, 153, 51)",     // Major Issues - orange
-                "rgb(238, 68, 68)",      // Unplayable - red
-                "rgb(187, 187, 187)"     // Untested - gray
-              ]
-            }]
-          },
-          options: {
-            plugins: {
-              legend: {
-                labels: {
-                  color: "white"
-                }
+      const colorMap = {
+        "Perfect": "rgb(91, 192, 222)",   // Dolphin blue
+        "Playable": "rgb(153, 221, 153)", // green
+        "Major Issues": "rgb(238, 153, 51)", // orange
+        "Unplayable": "rgb(238, 68, 68)", // red
+        "Untested": "rgb(187, 187, 187)"  // gray
+      };
+
+      const ctx = document.getElementById("compatChart").getContext("2d");
+
+      new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: Object.keys(mergedStats),
+          datasets: [{
+            data: Object.values(mergedStats),
+            backgroundColor: Object.keys(mergedStats).map(label => colorMap[label])
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              labels: {
+                color: "white"
               }
             }
-          },
-          plugins: [{
-            id: 'shadow',
-            beforeDraw: (chart) => {
-              const ctx = chart.ctx;
-              ctx.save();
-              ctx.shadowColor = "rgba(0,0,0,0.6)";
-              ctx.shadowBlur = 20;
-              ctx.shadowOffsetX = 4;
-              ctx.shadowOffsetY = 4;
-              ctx.restore();
-            }
-          }]
-        });
-      } catch (err) {
-        document.getElementById("last-updated").textContent =
-          "Data could not be loaded.";
-        console.error(err);
-      }
+          }
+        },
+        plugins: [{
+          id: 'shadow',
+          beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.shadowColor = "rgba(0,0,0,0.6)";
+            ctx.shadowBlur = 20;
+            ctx.shadowOffsetX = 4;
+            ctx.shadowOffsetY = 4;
+            ctx.restore();
+          }
+        }]
+      });
+    } catch (err) {
+      document.getElementById("last-updated").textContent =
+        "Data could not be loaded.";
+      console.error(err);
     }
+  }
 
-    loadData();
-  </script>
+  loadData();
+</script>
 </body>
 </html>
