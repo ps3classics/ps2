@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PS2 Classics Compatibility</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      background: #111;
+      color: #eee;
+    }
+    canvas {
+      max-width: 600px;
+      max-height: 600px;
+    }
+  </style>
+</head>
+<body>
+  <h1>PS2 Classics Emulator Compatibility (PS3)</h1>
+  <p id="last-updated"></p>
+  <canvas id="compatChart"></canvas>
+
+  <script>
+    async function loadData() {
+      const response = await fetch("data.json");
+      const { stats, last_updated } = await response.json();
+
+      document.getElementById("last-updated").textContent =
+        "Last updated: " + last_updated;
+
+      const ctx = document.getElementById("compatChart").getContext("2d");
+      new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: Object.keys(stats),
+          datasets: [{
+            data: Object.values(stats),
+            backgroundColor: [
+              "rgb(0, 136, 238)",      // PS2 Classic - blue
+              "rgb(153, 221, 153)",    // Playable - green
+              "rgb(238, 238, 136)",    // Minor Issues - yellow
+              "rgb(238, 153, 51)",     // Major Issues - orange
+              "rgb(238, 68, 68)",      // Unplayable - red
+              "rgb(187, 187, 187)"     // Untested - gray
+            ]
+          }]
+        }
+      });
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
