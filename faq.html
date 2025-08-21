@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ - PS2 Classics on PS3</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: linear-gradient(270deg, #003087, #1a4ca3, #0055cc);
+      background-size: 600% 600%;
+      animation: gradientShift 20s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    nav {
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      flex: 1;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      margin-top: 1.5rem;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.6);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="faq.html">FAQ</a>
+    <a href="compatibility.html">Compatibility</a>
+    <a href="https://ps3classics.github.io/ps1">PS1</a>
+    <a href="https://ps3classics.github.io/psp">PSP</a>
+  </nav>
+
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+
+    <h2>What is this site?</h2>
+    <p>This website aims to be the definitive resource for PS2 emulation on PS3.<br>Our focus is "PS2 Classics", the software emulator available for all PS3 models.</p>
+
+    <h2>Where does the data come from?</h2>
+    <p>Compatibility info is currently obtained from the <a href="https://www.psdevwiki.com/ps3/PS2_Classics_Emulator_Compatibility_List" style="color:#fff">PS3 Developer Wiki</a> compatibility list.</p>
+
+    <h2>Will this work on any PS3?</h2>
+    <p>Yes. Sony developed a PS2 emulator "PS2 Classics" called "ps2_netemu". It is entirely software emulated and works on any model.</p>
+
+    <h2>How can I contribute?</h2>
+    <p>If a game works perfectly, you may edit the Wiki directly.<br>If you test an untested game and discover it has issues, add it to the Wiki and open an issue via the <a href="https://github.com/ps3classics" style="color:#fff">GitHub repository</a>.</p>
+  </div>
+
+  <footer>
+    Part of the PS3 Classics Project · <a href="https://github.com/ps3classics" style="color:#fff">GitHub</a>
+  </footer>
+</body>
+</html>
