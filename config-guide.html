@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PS2 CONFIG Guide</title>
+  <style>
+    /* Base + theme */
+    :root {
+      --bg1: #002244; --bg2: #004488; --bg3: #001122; --bg4: #003366;
+      --text: #fff; --muted: rgba(255,255,255,0.8);
+      --card: rgba(0,0,0,0.55); --border: rgba(255,255,255,0.25);
+      --accent: #5BC0DE;
+      --ok: #99dd99; --warn: #eee888; --bad: #ee4444;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); font-family: Arial, sans-serif; text-align: left;
+      background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), var(--bg4));
+      background-size: 400% 400%; animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% }
+    }
+    nav {
+      background: rgba(0,0,0,0.6); padding: 14px 16px; position: sticky; top: 0; z-index: 10;
+      display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+    nav a { color: var(--text); text-decoration: none; font-weight: bold }
+    nav a:hover { text-decoration: underline }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px }
+    .page-title { text-align: center; margin: 12px 0 8px }
+    .subtitle { text-align: center; color: var(--muted); margin: 0 0 24px }
+
+    .grid {
+      display: grid; grid-template-columns: 280px 1fr; gap: 16px;
+    }
+    @media (max-width: 980px) { .grid { grid-template-columns: 1fr } }
+
+    /* Sidebar / TOC */
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .toc h3 { margin-top: 0 }
+    .toc a { display: block; color: var(--text); text-decoration: none; padding: 6px 0 }
+    .toc a:hover { color: var(--accent); }
+    .toc small { color: var(--muted) }
+
+    /* Main content */
+    section { margin-bottom: 18px }
+    section h2 { margin: 14px 0 10px }
+    section p { line-height: 1.6 }
+
+    /* Stepper */
+    .step {
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px; margin: 14px 0; background: rgba(0,0,0,0.35); border-radius: 8px;
+    }
+    .step .tag {
+      display: inline-block; background: var(--accent); color: #001018; font-weight: bold;
+      padding: 2px 8px; border-radius: 999px; margin-right: 8px;
+    }
+
+    /* Callouts */
+    .callout {
+      border: 1px solid var(--border); border-left-width: 6px; border-radius: 10px;
+      padding: 12px 14px; margin: 12px 0; background: rgba(0,0,0,0.35);
+    }
+    .callout.info { border-left-color: var(--accent) }
+    .callout.tip  { border-left-color: var(--ok) }
+    .callout.warn { border-left-color: var(--warn) }
+    .callout.danger { border-left-color: var(--bad) }
+
+    /* Details */
+    details { margin: 10px 0 }
+    details > summary { cursor: pointer; font-weight: bold; margin-bottom: 8px }
+
+    /* Code blocks + copy */
+    pre {
+      background: #0b0f15; color: #e4e7eb; border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px; overflow: auto; position: relative;
+    }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px; background: var(--accent); color: #001018;
+      border: none; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-weight: bold;
+    }
+    .copy-btn:active { transform: translateY(1px) }
+
+    /* Footer actions */
+    .actions {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px
+    }
+    .btn {
+      display: inline-block; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: rgba(0,0,0,0.4); color: var(--text); text-decoration: none; font-weight: bold;
+    }
+    .btn:hover { background: rgba(0,0,0,0.55) }
+    .btn.primary { background: var(--accent); color: #001018; border-color: transparent }
+    .btn.primary:hover { filter: brightness(0.95) }
+
+    /* Back to top */
+    .top {
+      position: fixed; right: 16px; bottom: 16px; z-index: 20;
+      background: rgba(0,0,0,0.55); border: 1px solid var(--border);
+      color: var(--text); text-decoration: none; padding: 10px 12px; border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="faq.html">FAQ</a>
+    <a href="compatibility.html">Compatibility</a>
+    <a href="https://ps3classics.github.io/ps1">PS1</a>
+    <a href="https://ps3classics.github.io/psp">PSP</a>
+  </nav>
+
+  <div class="wrap">
+    <h1 class="page-title">PS2 CONFIG Guide</h1>
+    <p class="subtitle">A step-by-step guide to build netemu CONFIG files.</p>
+
+    <div class="grid">
+      <!-- Sidebar / TOC -->
+      <aside class="card toc">
+        <h3>Table of Contents</h3>
+        <a href="#overview">1. Overview</a>
+        <a href="#prereqs">2. Prerequisites</a>
+        <a href="#glossary">3. Glossary</a>
+        <a href="#config">4. What's in a config?</a>
+        <a href="#workflow">5. Workflow</a>
+        <a href="#common-fixes">6. Common Fixes</a>
+        <a href="#create-config">7. Creating a Config</a>
+        <a href="#links">8. Links</a>
+        <hr style="border-color: var(--border); margin: 12px 0;">
+        <small>Tip: each section uses <strong>&lt;details&gt;</strong> so you can draft notes and collapse later.</small>
+      </aside>
+
+      <!-- Main content -->
+      <main>
+        <section id="overview" class="card">
+          <h2>1) Overview</h2>
+          <p>CONFIG files tweak the ps2_netemu emulator to fix certain issues, including performance, crashes and stutters.
+            They are not required for every game, and are not guaranteed to fix all issues, but they can significantly improve compatibility.
+          </p>
+          <div class="callout info">
+            This guide targets PS2 Classics (ps2_netemu) on PS3 only.
+          </div>
+        </section>
+
+        <section id="prereqs" class="card">
+          <h2>2) Prerequisites</h2>
+          <details open>
+            <summary>What you should have before you start</summary>
+            <ul>
+              <li>A hex editing program, such as HxD.</li>
+              <li>Your PS2 game in ISO format.</li>
+            </ul>
+          </details>
+          <div class="callout tip">Understanding the PS2 and PS3's hardware design can also help to diagnose issues. However, many games can be fixed with generic configs.</div>
+        </section>
+
+        <section id="glossary" class="card">
+          <h2>3) Glossary</h2>
+          <details>
+            <summary>Core terms</summary>
+            <ul>
+              <li><strong>EE</strong> - Emotion Engine (PS2 CPU).</li>
+              <li><strong>VU</strong> - Vector Units (VU0/VU1).</li>
+              <li><strong>GS</strong> - Graphics Synthesizer (PS2 GPU).</li>
+              <li><strong>FPU</strong> - Floating-point unit. Responsible for maths and accuracy.</li>
+            </ul>
+          </details>
+        </section>
+
+        <section id="config" class="card">
+          <h2>4) What's in a CONFIG?</h2>
+          <p>CONFIG files for netemu are basically small binary blobs that act as instructions for the emulator. They are viewed and edited via hex editors.</p>
+          <ul>
+            <li>CONFIGs typically start with <code>3D 00 00 00 57 44 00 00</code>. This header is optional and does not affect the game, but it is convention. It displays the config's revision in the debug menu - without, it displays 0 as the config revision.</li>
+            <li>After this header, commands are added. Commands are often referred to in hex format, eg. <code>0x21</code>. These are converted (how?) to binary for the config. See <a href="#common-fixes">Common Fixes</a> for examples.</li>
+          </ul>
+        </section>
+
+        <section id="workflow" class="card">
+          <h2>5) Workflow</h2>
+          <p>The first step should always be to check the PS2 CONFIG database to see if a config exists.<br>If your game does not have a config available, you can follow these steps to create one.</p>
+          <div class="step"><span class="tag">Step 1</span><strong>Detail the issue</strong>: Figure out as much as you can from playing the game. Where does it occur? What happens?</div>
+          <div class="step"><span class="tag">Step 2</span><strong>Check common issues</strong>: If your game suffers from a common issue, a generic config may work. See <a href="#common-issues">Common Issues</a> below.</div>
+          <div class="step"><span class="tag">Step 3</span><strong>Report</strong>: Test the game using common fixes. Place the CONFIG file beside the ISO with <strong>exactly</strong> the same name as the ISO. For instance, "Gun.iso" and "Gun.iso.CONFIG".<br>
+            <br>If these work, congratulations! Otherwise, we recommend filing an <a href="https://github.com/ps3classics/ps2/issues">issue</a> on GitHub or the <a href="https://www.psx-place.com/threads/compatibility-list-ps2-on-ps3.1306/">thread</a> at PSX-Place.</div>
+          <!--<div class="callout warn"><strong>Note.</strong> Try to change only one variable at a time to isolate the fix.</div>-->
+        </section>
+
+        <section id="common-fixes" class="card">
+          <h2>6) Common Fixes</h2>
+          <p>There are many common issues that can be fixed with a generic config. Here are some suggestions.</p>
+
+          <details>
+            <summary>FMV Stutter</summary>
+            <p>FMV stutter can often be fixed by the 0x21 command. Add <code>21 00 00 00 00 00 00 00</code> to the config to enable.<br><strong>Sample Config:</strong></p>
+            <pre><button class="copy-btn" data-copy>Copy</button><code>3D 00 00 00 57 44 00 00 21 00 00 00 00 00 00 00</code></pre>
+          </details>
+
+          <details>
+            <summary>Pressure Sensitivity</summary>
+           <p>Pressure sensitivity is not enabled by default, but can easily be enabled with 0x50. Add <code>50 00 00 00</code> to the config to enable.<br><strong>Sample Config:</strong></p>
+            <pre><button class="copy-btn" data-copy>Copy</button><code>3D 00 00 00 57 44 00 00 50 00 00 00 00 00 00 00</code></pre>
+          </details>
+
+          <details>
+            <summary>Performance</summary>
+           <p>Due to the nature of PS2 emulation on PS3, there will always be some games that can't reach full speed. However, there are a number of commands that may improve performance. As a rule of thumb, try 0x21 (instruction cache skip) or 0x46 (L2H Improvement).
+            <br>0x21: <code>21 00 00 00 00 00 00 00</code>
+            <br> 0x46: <code>46 00 00 00</code><br>
+            <br><strong>Sample Config:</strong></p>
+            <pre><button class="copy-btn" data-copy>Copy</button><code>3D 00 00 00 57 44 00 00 21 00 00 00 00 00 00 00 46 00 00 00</code></pre>
+          </details>
+
+          <details>
+            <summary>Multitap</summary>
+            <p>By default, multitap is enabled, but not assigned to either controller port. Multitap is done in two separate commands - 0x1C toggles multitap emulation, enabled in both ports by default. 0x1D sets which port to use. The sample config below enables multitap on port 1.<br>
+                <br><strong>Sample Config:</strong></p>
+            <pre><button class="copy-btn" data-copy>Copy</button><code>3D 00 00 00 57 44 00 00 1C 00 00 00 01 00 00 00 1D 00 00 00 01 00 00 00</code></pre>
+            <br>Some games may require multitap on port 2 instead. This config enables multitap on port 2:<br>
+                <br><strong>Sample Config:</strong></p>
+            <pre><button class="copy-btn" data-copy>Copy</button><code>3D 00 00 00 57 44 00 00 1C 00 00 00 02 00 00 00 1D 00 00 00 02 00 00 00</code></pre>
+          </details>
+        </section>
+
+        <section id="create-config" class="card">
+          <h2>7) Creating a CONFIG</h2>
+            <p>The easiest way to create a config is to modify an existing one in a hex editor. Below is a download link to a blank config, which includes only the header. Just add the relevant commands in binary, borrowing from the examples above.
+                <br>To convert a command from hex to binary, simply take the characters after <strong>0x</strong> and add "<strong>00 00 00</strong>". For instance, the command for pressure sensitivity is <strong>0x50</strong>. This becomes "<strong>50 00 00 00</strong>" in binary.
+                <br>If your command requires parameters, add these after the command. For instance, the command for multitap is <strong>0x1C</strong>, and it requires a parameter to set which port to use. To enable multitap on port 1, the full command becomes <code>1C 00 00 00 01 00 00 00</code>.
+            </p>
+        </section>
+
+        <section id="links" class="card">
+          <h2>8) Links</h2>
+            <ul>
+                <li><strong>PS2 CONFIG Database</strong> - hosted by aldostools: <a href="https://ps3.aldostools.org/ps2config.html">https://ps3.aldostools.org/ps2config.html</a></li>
+
+            </ul>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <a href="#top" class="top" aria-label="Back to top">↑</a>
+
+  <script>
+    // Add copy buttons to code blocks
+    document.querySelectorAll('pre .copy-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const code = e.target.parentElement.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = original, 1200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
