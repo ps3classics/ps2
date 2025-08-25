@@ -134,7 +134,7 @@
         <a href="#workflow">5. Workflow</a>
         <a href="#common-fixes">6. Common Fixes</a>
         <a href="#create-config">7. Creating a Config</a>
-        <a href="#links">8. Links</a>
+        <a href="#links">8. Links & Resources</a>
         <hr style="border-color: var(--border); margin: 12px 0;">
         <small>Tip: each section uses <strong>&lt;details&gt;</strong> so you can draft notes and collapse later.</small>
       </aside>
@@ -181,7 +181,7 @@
           <p>CONFIG files for netemu are basically small binary blobs that act as instructions for the emulator. They are viewed and edited via hex editors.</p>
           <ul>
             <li>CONFIGs typically start with <code>3D 00 00 00 57 44 00 00</code>. This header is optional and does not affect the game, but it is convention. It displays the config's revision in the debug menu - without, it displays 0 as the config revision.</li>
-            <li>After this header, commands are added. Commands are often referred to in hex format, eg. <code>0x21</code>. These are converted (how?) to binary for the config. See <a href="#common-fixes">Common Fixes</a> for examples.</li>
+            <li>After this header, commands are added. Commands are often referred to in hex format, eg. <code>0x21</code>. These are converted (how?) to binary for the config. See <a href="#common-fixes" style="color:#fff">Common Fixes</a> for examples.</li>
           </ul>
         </section>
 
@@ -189,9 +189,9 @@
           <h2>5) Workflow</h2>
           <p>The first step should always be to check the PS2 CONFIG database to see if a config exists.<br>If your game does not have a config available, you can follow these steps to create one.</p>
           <div class="step"><span class="tag">Step 1</span><strong>Detail the issue</strong>: Figure out as much as you can from playing the game. Where does it occur? What happens?</div>
-          <div class="step"><span class="tag">Step 2</span><strong>Check common issues</strong>: If your game suffers from a common issue, a generic config may work. See <a href="#common-issues">Common Issues</a> below.</div>
-          <div class="step"><span class="tag">Step 3</span><strong>Report</strong>: Test the game using common fixes. Place the CONFIG file beside the ISO with <strong>exactly</strong> the same name as the ISO. For instance, "Gun.iso" and "Gun.iso.CONFIG".<br>
-            <br>If these work, congratulations! Otherwise, we recommend filing an <a href="https://github.com/ps3classics/ps2/issues">issue</a> on GitHub or the <a href="https://www.psx-place.com/threads/compatibility-list-ps2-on-ps3.1306/">thread</a> at PSX-Place.</div>
+          <div class="step"><span class="tag">Step 2</span><strong>Check common issues</strong>: If your game suffers from a common issue, a generic config may work. See <a href="#common-issues" style="color:#fff">Common Issues</a> below.</div>
+          <div class="step"><span class="tag">Step 3</span><strong>Report</strong>: Test the game using common fixes. Place the CONFIG file beside the ISO with <strong>exactly</strong> the same name as the ISO. For instance, "Gun.iso" and "Gun.iso.CONFIG".
+            <br>If these work, congratulations! Otherwise, we recommend filing an <a href="https://github.com/ps3classics/ps2/issues" style="color:#fff">issue</a> on GitHub or the <a href="https://www.psx-place.com/threads/compatibility-list-ps2-on-ps3.1306/" style="color:#fff">thread</a> at PSX-Place.</div>
           <!--<div class="callout warn"><strong>Note.</strong> Try to change only one variable at a time to isolate the fix.</div>-->
         </section>
 
@@ -240,11 +240,12 @@
         </section>
 
         <section id="links" class="card">
-          <h2>8) Links</h2>
+          <h2>8) Links & Resources</h2>
             <ul>
-                <li><strong>PS2 CONFIG Database</strong> - hosted by aldostools: <a href="https://ps3.aldostools.org/ps2config.html">https://ps3.aldostools.org/ps2config.html</a></li>
-
+                <li><strong>PS2 CONFIG Database</strong> - hosted by aldostools: <a href="https://ps3.aldostools.org/ps2config.html" style="color:#fff">https://ps3.aldostools.org/ps2config.html</a></li>
+                <li><strong>PS Dev Wiki</strong> - a detailed list of CONFIG commands can be found here: <a href="https://www.psdevwiki.com/ps3/PS2_Emulation/PS2_Config_Commands" style="color:#fff">https://www.psdevwiki.com/ps3/PS2_Emulation/PS2_Config_Commands</a></li>
             </ul>
+            Special thanks to mrjaredbeta for his expertise and, without which this page wouldn't have been possible.
         </section>
       </main>
     </div>
