@@ -11,7 +11,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: #fff;
-      background: linear-gradient(270deg, #003087, #1a4ca3, #0055cc);
+      background: linear-gradient(-45deg, #002244, #004488, #001122, #003366);
       background-size: 600% 600%;
       animation: gradientShift 20s ease infinite;
       min-height: 100vh;
@@ -29,19 +29,22 @@
     nav {
       background-color: rgba(0, 0, 0, 0.6);
       display: flex;
-      justify-content: center;
+      justify-content: left;
       padding: 1rem;
       position: sticky;
       top: 0;
+      z-index: 1000;
     }
     nav a {
       color: #fff;
       margin: 0 1rem;
       text-decoration: none;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
     nav a:hover {
       text-decoration: underline;
+      color: #aad4ff;
     }
 
     /* Main container */
@@ -89,6 +92,7 @@
     <a href="index.html">Home</a>
     <a href="faq.html">FAQ</a>
     <a href="compatibility.html">Compatibility</a>
+    <a href="config-guide.html">CONFIG</a>
     <a href="https://ps3classics.github.io/ps1">PS1</a>
     <a href="https://ps3classics.github.io/psp">PSP</a>
   </nav>
@@ -127,7 +131,7 @@
       };
 
       const colorMap = {
-        "Perfect": "rgb(0, 102, 0)",   // dark green
+        "Perfect": "rgb(90, 180, 90)",   // dark green
         "Playable": "rgb(153, 221, 153)", // green
         "Major Issues": "rgb(238, 153, 51)", // orange
         "Unplayable": "rgb(238, 68, 68)", // red

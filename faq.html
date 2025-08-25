@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FAQ - PS2 Classics on PS3</title>
   <style>
+    /* Animated Gradient Background */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       color: #fff;
-      background: linear-gradient(270deg, #003087, #1a4ca3, #0055cc);
+      background: linear-gradient(-45deg, #002244, #004488, #001122, #003366);
       background-size: 600% 600%;
       animation: gradientShift 20s ease infinite;
       min-height: 100vh;
@@ -23,39 +24,58 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* Navbar */
     nav {
       background-color: rgba(0, 0, 0, 0.6);
       display: flex;
-      justify-content: center;
+      justify-content: left;
       padding: 1rem;
       position: sticky;
       top: 0;
+      z-index: 1000;
     }
     nav a {
       color: #fff;
       margin: 0 1rem;
       text-decoration: none;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
     nav a:hover {
       text-decoration: underline;
+      color: #aad4ff;
     }
 
+    /* Main container */
     .container {
       flex: 1;
+      text-align: center;
       padding: 2rem;
-      max-width: 800px;
-      margin: auto;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
       text-shadow: 0 0 8px rgba(0,0,0,0.4);
     }
 
-    h2 {
-      margin-top: 1.5rem;
+    p.lead {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      text-shadow: 0 0 4px rgba(0,0,0,0.5);
+    }
+
+    #last-updated {
+      margin-top: 1rem;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    canvas {
+      max-width: 500px;
+      margin: 2rem auto;
     }
 
     footer {
@@ -64,7 +84,6 @@
       padding: 1rem;
       font-size: 0.8rem;
     }
-
   </style>
 </head>
 <body>
@@ -72,6 +91,7 @@
     <a href="index.html">Home</a>
     <a href="faq.html">FAQ</a>
     <a href="compatibility.html">Compatibility</a>
+    <a href="config-guide.html">CONFIG</a>
     <a href="https://ps3classics.github.io/ps1">PS1</a>
     <a href="https://ps3classics.github.io/psp">PSP</a>
   </nav>
@@ -86,7 +106,7 @@
     <p>Compatibility info is currently obtained from the <a href="https://www.psdevwiki.com/ps3/PS2_Classics_Emulator_Compatibility_List" style="color:#fff">PS3 Developer Wiki</a> compatibility list.</p>
 
     <h2>Will this work on any PS3?</h2>
-    <p>Yes. Sony developed a PS2 emulator "PS2 Classics" called "ps2_netemu". It is entirely software emulated and works on any model. Technical information and comparisons are also available on <a href="https://www.psdevwiki.com/ps3/PS2_Emulation" style="color:#fff">PS3 Developer Wiki</a>.</p>
+    <p>Yes. Sony developed a PS2 emulator for their digitally released "PS2 Classics" called "ps2_netemu". It is entirely software emulated and works on any model. Technical information and comparisons are also available on <a href="https://www.psdevwiki.com/ps3/PS2_Emulation" style="color:#fff">PS3 Developer Wiki</a>.</p>
 
     <h2>How can I play PS2 games on any PS3?</h2>
     <p>If you have Cobra CFW, you can simply place your ISO into the "PS2ISO" folder at the root of the HDD. Otherwise, install the game as a PKG. There is no compatibility difference as they both use netemu.
