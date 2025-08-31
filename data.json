@@ -1,11 +1,11 @@
 {
   "stats": {
     "PS2 Classic": 338,
-    "Playable": 1198,
-    "Minor Issues": 243,
-    "Major Issues": 53,
+    "Playable": 1202,
+    "Minor Issues": 241,
+    "Major Issues": 52,
     "Unplayable": 64,
-    "Untested": 322
+    "Untested": 348
   },
-  "last_updated": "2025-08-21 21:47:30 UTC"
+  "last_updated": "2025-08-31 14:27:36 UTC"
 }
