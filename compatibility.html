@@ -236,10 +236,16 @@
       // totals
       const fullyCompatible = stats["PS2 Classic"] + stats["Playable"];
       const fullyPercent = ((fullyCompatible / total) * 100).toFixed(1);
+      const noMajorIssues = fullyCompatible + stats["Minor Issues"];
+      const noMajorPercent = ((noMajorIssues / total) * 100).toFixed(1);
       const testedPercent = ((fullyCompatible / (total - stats["Untested"])) * 100).toFixed(1);
+      const noMajorTestedPercent = ((noMajorIssues / (total - stats["Untested"])) * 100).toFixed(1);
+      const noMajorIssuesTested = noMajorIssues - stats["Untested"];
+      
       document.getElementById("totals").innerHTML =
-        `<strong>Fully Compatible (PS2 Classic + Playable):</strong> ${fullyPercent}% (${fullyCompatible} games out of ${total})<br>
-         <strong>Tested Compatibility:</strong> ${testedPercent}% of tested games are fully compatible`;
+        `<strong>Fully Compatible (PS2 Classic + Perfect):</strong> ${fullyPercent}% (${fullyCompatible} games out of ${total})<br>
+         <strong>Tested Compatibility:</strong> ${testedPercent}% of tested games are fully compatible
+         <strong>Playable Tested:</strong> ${noMajorTestedPercent}% of tested games have no major issues (${noMajorIssuesTested} out of ${total - stats["Untested"]})<br>`;
     }
     loadData();
   </script>
