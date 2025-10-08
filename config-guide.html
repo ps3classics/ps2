@@ -31,12 +31,22 @@
       0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% }
     }
     nav {
-      background: rgba(0,0,0,0.6); padding: 14px 16px; position: sticky; top: 0; z-index: 10;
-      display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: left;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
     }
-    nav a { color: var(--text); text-decoration: none; font-weight: bold }
-    nav a:hover { text-decoration: underline }
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
 
     .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px }
     .page-title { text-align: center; margin: 12px 0 8px }
