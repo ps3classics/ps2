@@ -8,7 +8,6 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ps3classics.github.io/ps2/compatibility.html" />
   <meta property="og:image" content="https://ps3classics.github.io/ps2/icon.png" />
-  <!-- General meta -->
   <meta name="description" content="Detailed PS2 Classics compatibility list with stats, guides, and updates." />
   <meta name="author" content="PS3 Classics" />
   <title>PS2 Compatibility</title>
@@ -145,7 +144,7 @@
       };
 
       const mergedColors = {
-        "Perfect": "rgb(153, 221, 153)", // green
+        "Perfect": "rgb(153, 221, 153)", 
         "Minor Issues": "rgb(238, 238, 136)",
         "Major Issues": "rgb(238, 153, 51)",
         "Unplayable": "rgb(238, 68, 68)",
@@ -190,7 +189,7 @@
       // second bar for tested-only
       renderProgressBar("progress-bar-tested", testedStats, testedTotal);
 
-      // Add tested-only text summary
+      // add tested-only text summary
       const testedList = document.getElementById("percentages-tested");
       testedList.innerHTML = "";
       for (const [key, value] of Object.entries(testedStats)) {
@@ -241,7 +240,7 @@
       const testedPercent = ((fullyCompatible / (total - stats["Untested"])) * 100).toFixed(1);
       const noMajorTestedPercent = ((noMajorIssues / (total - stats["Untested"])) * 100).toFixed(1);
       const noMajorIssuesTested = noMajorIssues - stats["Untested"];
-      
+
       document.getElementById("totals").innerHTML =
         `<strong>Fully Compatible (PS2 Classic + Perfect):</strong> ${fullyPercent}% (${fullyCompatible} games out of ${total})<br>
          <strong>Tested Compatibility:</strong> ${testedPercent}% of tested games are fully compatible

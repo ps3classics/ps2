@@ -14,7 +14,7 @@
   <title>PS2 Classics on PS3</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* Animated Gradient Background */
+    /* animated gradient background */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -33,7 +33,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Navbar */
     nav {
       background-color: rgba(0, 0, 0, 0.6);
       display: flex;
@@ -55,7 +54,6 @@
       color: #aad4ff;
     }
 
-    /* Main container */
     .container {
       flex: 1;
       text-align: center;
@@ -139,11 +137,11 @@
       };
 
       const colorMap = {
-        "Perfect": "rgb(90, 180, 90)",   // dark green
-        "Playable": "rgb(153, 221, 153)", // green
-        "Major Issues": "rgb(238, 153, 51)", // orange
-        "Unplayable": "rgb(238, 68, 68)", // red
-        "Untested": "rgb(187, 187, 187)"  // gray
+        "Perfect": "rgb(90, 180, 90)",  
+        "Playable": "rgb(153, 221, 153)",
+        "Major Issues": "rgb(238, 153, 51)",
+        "Unplayable": "rgb(238, 68, 68)", 
+        "Untested": "rgb(187, 187, 187)"
       };
 
       const ctx = document.getElementById("compatChart").getContext("2d");

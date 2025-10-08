@@ -8,12 +8,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ps3classics.github.io/ps2/config-guide.html" />
   <meta property="og:image" content="https://ps3classics.github.io/ps2/icon.png" />
-  <!-- General meta -->
   <meta name="description" content="Detailed PS2 Classics compatibility list with stats, guides, and updates." />
   <meta name="author" content="PS3 Classics" />
   <title>PS2 Classics - CONFIG Guide</title>
-  <style>
-    /* Base + theme */
+  <style> /* todo: style sheet */
     :root {
       --bg1: #002244; --bg2: #004488; --bg3: #001122; --bg4: #003366;
       --text: #fff; --muted: rgba(255,255,255,0.8);
@@ -57,7 +55,6 @@
     }
     @media (max-width: 980px) { .grid { grid-template-columns: 1fr } }
 
-    /* Sidebar / TOC */
     .card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 12px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
@@ -67,12 +64,11 @@
     .toc a:hover { color: var(--accent); }
     .toc small { color: var(--muted) }
 
-    /* Main content */
+    /* main content */
     section { margin-bottom: 18px }
     section h2 { margin: 14px 0 10px }
     section p { line-height: 1.6 }
 
-    /* Stepper */
     .step {
       border-left: 4px solid var(--accent);
       padding: 14px 16px; margin: 14px 0; background: rgba(0,0,0,0.35); border-radius: 8px;
@@ -82,7 +78,6 @@
       padding: 2px 8px; border-radius: 999px; margin-right: 8px;
     }
 
-    /* Callouts */
     .callout {
       border: 1px solid var(--border); border-left-width: 6px; border-radius: 10px;
       padding: 12px 14px; margin: 12px 0; background: rgba(0,0,0,0.35);
@@ -92,11 +87,9 @@
     .callout.warn { border-left-color: var(--warn) }
     .callout.danger { border-left-color: var(--bad) }
 
-    /* Details */
     details { margin: 10px 0 }
     details > summary { cursor: pointer; font-weight: bold; margin-bottom: 8px }
 
-    /* Code blocks + copy */
     pre {
       background: #0b0f15; color: #e4e7eb; border: 1px solid var(--border);
       border-radius: 10px; padding: 12px 14px; overflow: auto; position: relative;
@@ -107,7 +100,6 @@
     }
     .copy-btn:active { transform: translateY(1px) }
 
-    /* Footer actions */
     .actions {
       display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px
     }
@@ -119,7 +111,6 @@
     .btn.primary { background: var(--accent); color: #001018; border-color: transparent }
     .btn.primary:hover { filter: brightness(0.95) }
 
-    /* Back to top */
     .top {
       position: fixed; right: 16px; bottom: 16px; z-index: 20;
       background: rgba(0,0,0,0.55); border: 1px solid var(--border);
@@ -270,7 +261,7 @@
   <a href="#top" class="top" aria-label="Back to top">↑</a>
 
   <script>
-    // Add copy buttons to code blocks
+    // add copy buttons to code blocks
     document.querySelectorAll('pre .copy-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         const code = e.target.parentElement.querySelector('code').innerText;
